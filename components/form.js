@@ -61,7 +61,11 @@ export default function Form() {
             ))}
           </tbody>
         </table>
-        <button type="button" onClick={submitWarehouse}>
+        <button
+          data-testid="submit-warehouse-btn"
+          type="button"
+          onClick={submitWarehouse}
+        >
           Submit New Warehouse
         </button>
       </form>

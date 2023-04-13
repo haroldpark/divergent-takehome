@@ -15,9 +15,16 @@ describe("Form component", () => {
     const submitButton = screen.queryByTestId("submit-warehouse-btn");
     // Assert that the button is rendering on the screen
     expect(submitButton).toBeInTheDocument();
-    await userEvent.click(submitButton);
-    expect(fetch).toHaveBeenCalledTimes(1);
 
-    // Instead of mocking fetch and asserting that it was called, ideally we would want to test the submit functionality with
+    // Simulate a user clicking on the submit button
+    await userEvent.click(submitButton);
+
+    const successMessage = screen.queryByText(
+      "New warehouse submitted successfully"
+    );
+    // Assert that the success message is now rendering on the screen
+    expect(successMessage).toBeInTheDocument();
+    // Assert that fetch has been called once
+    expect(fetch).toHaveBeenCalledTimes(1);
   });
 });

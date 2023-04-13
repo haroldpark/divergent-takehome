@@ -17,7 +17,6 @@ export default function Form() {
   const submitWarehouse = async () => {
     try {
       // POST Request
-
       const response = await fetch("/api/warehouse", {
         method: "POST",
         body: JSON.stringify({ newWarehouseData }),

@@ -28,7 +28,6 @@ npm run dev
 ```
 npm run test
 ```
-* NOTE: There is a known issue where 50% of the time, an SWC error will pop up
 
 ## Notes
 

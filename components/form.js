@@ -1,4 +1,5 @@
 import { useState } from "react";
+import styles from "../styles/Form.module.css";
 
 const SHELF_NUM = 10;
 const ZONE_NUM = 12;
@@ -10,20 +11,29 @@ export default function Form() {
     initialWarehouseDataShape
   );
 
+  const [showSuccessMsg, setShowSuccessMsg] = useState(false);
+  const [showErrorMsg, setShowErrorMsg] = useState(false);
+
   const submitWarehouse = async () => {
-    // POST Request
-    const response = await fetch("/api/warehouse", {
-      method: "POST",
-      body: JSON.stringify({ newWarehouseData }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const allWhData = await response.json();
-    // This could be used to make a new component to keep track of currently existing warehouses
-    setAllWarehouseData(allWhData);
-    // Reset the form
-    document.getElementById("warehouse-form").reset();
+    try {
+      // POST Request
+
+      const response = await fetch("/api/warehouse", {
+        method: "POST",
+        body: JSON.stringify({ newWarehouseData }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      displaySuccessMessage();
+      const allWhData = await response.json();
+      // This could be used to make a new component to keep track of currently existing warehouses
+      setAllWarehouseData(allWhData);
+      // Reset the form
+      document.getElementById("warehouse-form").reset();
+    } catch (error) {
+      console.log("There was an error", error);
+    }
   };
 
   const handleShelfNameChange = (event, zIndex, sIndex) => {
@@ -33,6 +43,15 @@ export default function Form() {
     setNewWarehouseData(dataCopy);
   };
 
+  const displaySuccessMessage = () => {
+    setShowSuccessMsg(true);
+    setTimeout(() => {
+      setShowSuccessMsg(false);
+    }, 5000);
+  };
+
+  const displayErrorMessage = () => {};
+
   return (
     <div>
       <form id="warehouse-form">
@@ -40,6 +59,7 @@ export default function Form() {
         <table>
           <thead>
             <tr>
+              {/* TODO: use newWarehouseData*/}
               {[...Array(ZONE_NUM)].map((x, zi) => (
                 <th key={"zone-headers-" + zi}>Zone {zi + 1}</th>
               ))}
@@ -61,13 +81,27 @@ export default function Form() {
             ))}
           </tbody>
         </table>
-        <button
-          data-testid="submit-warehouse-btn"
-          type="button"
-          onClick={submitWarehouse}
-        >
-          Submit New Warehouse
-        </button>
+        <div className={styles.btnWrapper}>
+          {showSuccessMsg && (
+            <span className={styles.successMsg}>
+              New warehouse submitted successfully
+            </span>
+          )}
+          {showErrorMsg && (
+            <span className={styles.errorMsg}>
+              There was an error when submitting your request
+            </span>
+          )}
+          <button
+            id="submit-warehouse-btn"
+            className={styles.submitBtn}
+            data-testid="submit-warehouse-btn"
+            type="button"
+            onClick={submitWarehouse}
+          >
+            Submit New Warehouse
+          </button>
+        </div>
       </form>
     </div>
   );

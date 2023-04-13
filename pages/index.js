@@ -1,7 +1,6 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Form from "../components/form.js";
-import { dummyWarehouseData } from "../data/dummyWarehouseData";
 
 /*
     ***Data structures***

@@ -1,0 +1,15 @@
+.btnWrapper {
+    text-align: right;
+}
+
+.submitBtn {
+    margin-left: 20px
+}
+
+.successMsg {
+    color: green
+}
+
+.errorMsg {
+    color: red
+}

@@ -1,6 +1,7 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Form from "../components/form.js";
+import { dummyWarehouseData } from "../data/dummyWarehouseData";
 
 /*
     ***Data structures***
@@ -36,7 +37,7 @@ import Form from "../components/form.js";
     5. Typescript
 */
 
-export default function Home() {
+export default function Home({ props }) {
   return (
     <div className={styles.container}>
       <Head>

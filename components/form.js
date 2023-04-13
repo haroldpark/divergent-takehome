@@ -5,11 +5,13 @@ const ZONE_NUM = 12;
 const initialWarehouseDataShape = [...Array(ZONE_NUM)].map(() => []);
 
 export default function Form() {
+  const [allWarehouseData, setAllWarehouseData] = useState([]);
   const [newWarehouseData, setNewWarehouseData] = useState(
     initialWarehouseDataShape
   );
 
   const submitWarehouse = async () => {
+    // POST Request
     const response = await fetch("/api/warehouse", {
       method: "POST",
       body: JSON.stringify({ newWarehouseData }),
@@ -17,8 +19,11 @@ export default function Form() {
         "Content-Type": "application/json",
       },
     });
-    const data = await response.json();
-    console.log(data);
+    const allWhData = await response.json();
+    // This could be used to make a new component to keep track of currently existing warehouses
+    setAllWarehouseData(allWhData);
+    // Reset the form
+    document.getElementById("warehouse-form").reset();
   };
 
   const handleShelfNameChange = (event, zIndex, sIndex) => {
@@ -30,7 +35,7 @@ export default function Form() {
 
   return (
     <div>
-      <form>
+      <form id="warehouse-form">
         <h2>Please define shelf names within each zone of your warehouse</h2>
         <table>
           <thead>
